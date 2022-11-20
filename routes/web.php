@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\PostController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SingleController;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,9 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/single/{post}', [SingleController::class, 'index'])->name('single');
 Route::post('/single/{post}/comments', [SingleController::class, 'createComment'])
     ->middleware('auth:web')
-    ->name(' ');
+    ->name('single.comment');
 
-
+Route::group(['prefix' => 'admin'], function () {
+    Route::resource('posts', PostController::class)->except(['show']);
+});
 Auth::routes();
