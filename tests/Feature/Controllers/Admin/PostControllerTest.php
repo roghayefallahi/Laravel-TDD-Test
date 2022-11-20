@@ -17,8 +17,9 @@ class PostControllerTest extends TestCase
      */
     public function testIndexMethod()
     {
+        $this->withDeprecationHandling();
         Post::factory()->count(100)->create();
-        $this->get(route('post.index'))
+        $this->get(route('posts.index'))
             ->assertOk()
             ->assertViewIs('admin.post.index')
             ->assertViewHas('posts', Post::latest()->paginate(15));
