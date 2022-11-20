@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Controllers\Admin;
 
+use App\Models\Post;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -14,10 +15,12 @@ class PostControllerTest extends TestCase
      *
      * @return void
      */
-    public function test_example()
+    public function testIndexMethod()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
+        Post::factory()->count(100)->create();
+        $this->get(route('post.index'))
+            ->assertOk()
+            ->assertViewIs('admin.post.index')
+            ->assertViewHas('posts', Post::latest()->paginate(15));
     }
 }
