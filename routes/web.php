@@ -26,7 +26,7 @@ Route::post('/single/{post}/comments', [SingleController::class, 'createComment'
     ->middleware('auth:web')
     ->name('single.comment');
 
-Route::group(['prefix' => 'admin'], function () {
+Route::group(['prefix' => 'admin', 'middleware'=>'admin'], function () {
     Route::resource('posts', PostController::class)->except(['show']);
 });
 Auth::routes();

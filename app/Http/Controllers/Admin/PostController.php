@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -27,7 +28,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $tags = Tag::latest()->get();
+
+        return view('admin.post.create', compact('tags'));
     }
 
     /**
@@ -60,7 +63,9 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $tags = Tag::latest()->get();
+
+        return view('admin.post.edit', compact('tags', 'post'));
     }
 
     /**
